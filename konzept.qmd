@@ -1,0 +1,17 @@
+---
+title: "Projektkonzept"
+subtitle: "5230 - Geoinformation und Raumanalyse II"
+author:
+  - Aurelia Weickgenannt
+  - Melanie Schiefermüller
+  - Manuel Hubler
+  - Tobias Schulthess
+date: 2026-10-06
+bibliography: literatur.bib
+---
+
+{{< include kapitel/01-kapitel.md >}}
+
+{{< include kapitel/02-kapitel.md >}}
+
+{{< include kapitel/99-literatur.md >}}

@@ -1,0 +1,104 @@
+# =============================================================================
+#  _quarto.yml  –  Projekt- und Layout-Einstellungen für den Bericht VP-GIS
+#  Alle Layout-Werte (Schrift, Ränder, Überschriften, Kopf-/Fusszeile,
+#  Titelseite) werden hier angepasst. Inhalte stehen in kapitel/*.md.
+# =============================================================================
+
+project:
+  type: default
+  render:
+    - konzept.qmd            # nur das Hauptdokument rendern, nicht die Kapitel einzeln
+
+lang: de-CH
+date-format: "D. MMMM YYYY"
+number-sections: true
+
+# -----------------------------------------------------------------------------
+#  PDF-Ausgabe (Standard-Quarto-Optionen)
+# -----------------------------------------------------------------------------
+format:
+  pdf:
+    pdf-engine: xelatex
+    documentclass: scrartcl          # KOMA-Script, Artikel-Klasse (kein Seitenumbruch pro Kapitel)
+    papersize: a4
+    fontsize: 11pt
+    mainfont: Times New Roman                 # Alternativen: "Liberation Sans", "TeX Gyre Heros"
+    sansfont: Times New Roman
+    toc: true
+    toc-depth: 3
+    toc-title: Inhaltsverzeichnis
+    colorlinks: false
+    link-citations: true
+    # Seitenränder wie in der Word-Vorlage (A4)
+    geometry:
+      - top=4cm
+      - bottom=3cm
+      - left=2.1cm
+      - right=1.3cm
+      - headheight=1.1cm             # Höhe der Kopfzeile (Logo)
+      - headsep=1.9cm                # Abstand Kopfzeile -> Text
+      - footskip=1.9cm               # Abstand Text -> Fusszeile
+    # Eigenes LaTeX-Template-Partial: setzt Titelseite, Kopf-/Fusszeile und
+    # Überschriften anhand der Werte weiter unten um.
+    template-partials:
+      - layout/title.tex
+
+  # ---------------------------------------------------------------------------
+  #  HTML-Ausgabe (Zeile löschen bzw. Block entfernen = kein HTML)
+  # ---------------------------------------------------------------------------
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: Inhaltsverzeichnis
+    embed-resources: true            # alles in einer einzigen HTML-Datei
+    link-citations: true
+    # theme: cosmo                   # Bootswatch-Design, z. B. cosmo, flatly, journal
+
+# Literaturstil: Standard ist Chicago (Autor-Jahr). Für APA o. ä. eine CSL-Datei
+# (z. B. von zotero.org/styles) ins Projekt legen und hier eintragen:
+# csl: apa.csl
+
+# -----------------------------------------------------------------------------
+#  Text
+# -----------------------------------------------------------------------------
+text:
+  blocksatz: false                   # false = linksbündig (wie Word-Vorlage), true = Blocksatz
+
+# -----------------------------------------------------------------------------
+#  Titelseite
+# -----------------------------------------------------------------------------
+titelseite:
+  titel-groesse: 20pt                # Titel (fett) und Untertitel
+  bild: bilder/titelbild.jpg         # Titelbild (3:2); Zeile löschen = kein Bild
+  abstand-titel-bild: 14pt
+  abstand-bild-autoren: 14pt
+  abstand-autoren-datum: 24pt
+  ort: Muttenz                       # erscheint vor dem Datum
+
+# -----------------------------------------------------------------------------
+#  Kopf- und Fusszeile
+# -----------------------------------------------------------------------------
+kopf-fusszeile:
+  logo: bilder/logo.png
+  logo-hoehe: 1.0cm
+  datum: true                        # aktuelles Datum (TT.MM.JJ) rechts in der Kopfzeile
+  schriftgroesse: 8pt
+  fuss-links: Konzept Projekt Geoinformation und Raumanalyse II
+  fuss-seite: Seite                  # ergibt "Seite 3/12"
+
+# -----------------------------------------------------------------------------
+#  Überschriften und Inhaltsverzeichnis
+# -----------------------------------------------------------------------------
+ueberschriften:
+  h1-neue-seite: true                # true = jedes Kapitel beginnt auf neuer Seite
+  h1-groesse: 14pt
+  h2-groesse: 11pt
+  h3-groesse: 11pt
+  h1-abstand-vor: 24pt
+  h2-abstand-vor: 14pt
+  h3-abstand-vor: 14pt
+  abstand-nach: 6pt
+  nummernbreite: 1.27cm              # Breite der Nummernspalte (1, 1.1, 1.1.1)
+  verzeichnis-groesse: 20pt          # Titel «Inhaltsverzeichnis»
+  verzeichnis-nummernbreite: 2cm
+  verzeichnis-abstand: 5pt           # Abstand zwischen Verzeichniseinträgen

@@ -1,0 +1,98 @@
+$-- =============================================================================
+$-- layout/title.tex  –  Quarto-Template-Partial (LaTeX)
+$-- Setzt Titelseite, Kopf-/Fusszeile, Überschriften und Inhaltsverzeichnis um.
+$-- Die Werte kommen aus _quarto.yml; hier muss normalerweise nichts geändert werden.
+$-- =============================================================================
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+$if(text.blocksatz)$$else$\usepackage{ragged2e}
+\RaggedRight$endif$
+
+\makeatletter
+
+% ---- Titelblock-Daten -------------------------------------------------------
+\title{$title$}
+\date{$date$}
+\newcommand{\fhnwTitel}{$title$}
+\newcommand{\fhnwUntertitel}{$subtitle$}
+\newcommand{\fhnwAutoren}{$if(by-author)$$for(by-author)$$by-author.name.literal$$sep$\\$endfor$$else$$for(author)$$author$$sep$\\$endfor$$endif$}
+\author{\fhnwAutoren}
+\newcommand{\fhnwOrtDatum}{$if(titelseite.ort)$$titelseite.ort$, $endif$$date$}
+
+% ---- Kurzdatum TT.MM.JJ für die Kopfzeile ----------------------------------
+\newcommand{\fhnwKurzdatum}{\two@digits{\day}.\two@digits{\month}.\two@digits{\numexpr\year-2000\relax}}
+
+% ---- Schrift: Überschriften im Fliesstext-Font, fett -------------------------
+\setkomafont{disposition}{\normalfont\bfseries}
+\setkomafont{section}{\fontsize{$ueberschriften.h1-groesse$}{\dimexpr$ueberschriften.h1-groesse$*6/5\relax}\selectfont}
+\setkomafont{subsection}{\fontsize{$ueberschriften.h2-groesse$}{\dimexpr$ueberschriften.h2-groesse$*6/5\relax}\selectfont}
+\setkomafont{subsubsection}{\fontsize{$ueberschriften.h3-groesse$}{\dimexpr$ueberschriften.h3-groesse$*6/5\relax}\selectfont}
+
+% ---- Abstände und Nummerierung der Überschriften ----------------------------
+\RedeclareSectionCommand[beforeskip=$ueberschriften.h1-abstand-vor$,afterskip=$ueberschriften.abstand-nach$]{section}
+\RedeclareSectionCommand[beforeskip=$ueberschriften.h2-abstand-vor$,afterskip=$ueberschriften.abstand-nach$]{subsection}
+\RedeclareSectionCommand[beforeskip=$ueberschriften.h3-abstand-vor$,afterskip=$ueberschriften.abstand-nach$]{subsubsection}
+\renewcommand*{\autodot}{}
+\renewcommand*{\sectionformat}{\makebox[$ueberschriften.nummernbreite$][l]{\thesection}}
+\renewcommand*{\subsectionformat}{\makebox[$ueberschriften.nummernbreite$][l]{\thesubsection}}
+\renewcommand*{\subsubsectionformat}{\makebox[$ueberschriften.nummernbreite$][l]{\thesubsubsection}}
+
+% ---- Jedes Kapitel (Überschrift 1) auf neuer Seite ---------------------------
+$if(ueberschriften.h1-neue-seite)$
+\let\fhnw@oldsection\section
+\renewcommand*{\section}{\clearpage\fhnw@oldsection}
+$endif$
+
+% ---- Inhaltsverzeichnis: flach, ohne Punkteführung ---------------------------
+\DeclareTOCStyleEntries[indent=0pt,numwidth=$ueberschriften.verzeichnis-nummernbreite$,dynnumwidth=false,entryformat=\normalfont,pagenumberformat=\normalfont,beforeskip=$ueberschriften.verzeichnis-abstand$,linefill=\hfill]{tocline}{section,subsection,subsubsection}
+\let\fhnw@oldtoc\tableofcontents
+\renewcommand*{\tableofcontents}{%
+  \begingroup
+  \setkomafont{section}{\fontsize{$ueberschriften.verzeichnis-groesse$}{\dimexpr$ueberschriften.verzeichnis-groesse$*6/5\relax}\selectfont}%
+  \fhnw@oldtoc
+  \endgroup
+  \clearpage}
+
+% ---- Tabellen linksbündig statt zentriert -----------------------------------
+\AtBeginDocument{\setlength{\LTleft}{0pt}\setlength{\LTright}{\fill}}
+
+% ---- Kopf- und Fusszeile -----------------------------------------------------
+\newcommand{\fhnwLogo}{\includegraphics[height=$kopf-fusszeile.logo-hoehe$]{$kopf-fusszeile.logo$}}
+\newcommand{\fhnwKleinSchrift}{\fontsize{$kopf-fusszeile.schriftgroesse$}{\dimexpr$kopf-fusszeile.schriftgroesse$*6/5\relax}\selectfont}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\fancypagestyle{fhnwtitel}{%
+  \fancyhf{}%
+  \fancyhead[L]{\fhnwLogo}%
+}
+\fancypagestyle{fhnwinhalt}{%
+  \fancyhf{}%
+  \fancyhead[L]{\fhnwLogo}%
+$if(kopf-fusszeile.datum)$
+  \fancyhead[R]{\fhnwKleinSchrift\fhnwKurzdatum}%
+$endif$
+  \fancyfoot[L]{\fhnwKleinSchrift $kopf-fusszeile.fuss-links$}%
+  \fancyfoot[R]{\fhnwKleinSchrift $kopf-fusszeile.fuss-seite$ \thepage/\pageref{LastPage}}%
+}
+\pagestyle{fhnwinhalt}
+
+% ---- Titelseite --------------------------------------------------------------
+\renewcommand{\maketitle}{%
+  \thispagestyle{fhnwtitel}%
+  \begingroup
+  \noindent{\fontsize{$titelseite.titel-groesse$}{\dimexpr$titelseite.titel-groesse$*6/5\relax}\selectfont\bfseries\fhnwTitel\par}%
+  \noindent{\fontsize{$titelseite.titel-groesse$}{\dimexpr$titelseite.titel-groesse$*6/5\relax}\selectfont\fhnwUntertitel\par}%
+$if(titelseite.bild)$
+  \vspace{$titelseite.abstand-titel-bild$}%
+  \noindent\includegraphics[width=\textwidth]{$titelseite.bild$}\par
+$endif$
+  \vspace{$titelseite.abstand-bild-autoren$}%
+  \noindent\fhnwAutoren\par
+  \vspace{$titelseite.abstand-autoren-datum$}%
+  \noindent\fhnwOrtDatum\par
+  \endgroup
+  \clearpage}
+
+\makeatother
