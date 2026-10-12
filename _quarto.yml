@@ -91,9 +91,9 @@ kopf-fusszeile:
 # -----------------------------------------------------------------------------
 ueberschriften:
   h1-neue-seite: true                # true = jedes Kapitel beginnt auf neuer Seite
-  h1-groesse: 14pt
-  h2-groesse: 11pt
-  h3-groesse: 11pt
+  h1-groesse: 20pt
+  h2-groesse: 16pt
+  h3-groesse: 14pt
   h1-abstand-vor: 24pt
   h2-abstand-vor: 14pt
   h3-abstand-vor: 14pt

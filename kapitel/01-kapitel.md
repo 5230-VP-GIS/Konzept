@@ -1,12 +1,4 @@
-# Überschrift 1
-
-Text
-
-| Spalte 1 | Spalte 2 | Spalte 3 |
-|----------|----------|----------|
-|          |          |          |
-|          |          |          |
-|          |          |          |
+# Einleitung
 
 ## Überschrift 2
 

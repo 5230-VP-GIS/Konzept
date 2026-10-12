@@ -14,4 +14,6 @@ bibliography: literatur.bib
 
 {{< include kapitel/02-kapitel.md >}}
 
+{{< include kapitel/03-kapitel.md >}}
+
 {{< include kapitel/99-literatur.md >}}
