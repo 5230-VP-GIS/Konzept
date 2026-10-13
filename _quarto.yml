@@ -94,9 +94,10 @@ ueberschriften:
   h1-groesse: 20pt
   h2-groesse: 16pt
   h3-groesse: 14pt
+  h4-groesse: 12pt
   h1-abstand-vor: 24pt
-  h2-abstand-vor: 14pt
-  h3-abstand-vor: 14pt
+  h2-abstand-vor: 8pt
+  h3-abstand-vor: 8pt
   abstand-nach: 6pt
   nummernbreite: 1.27cm              # Breite der Nummernspalte (1, 1.1, 1.1.1)
   verzeichnis-groesse: 20pt          # Titel «Inhaltsverzeichnis»

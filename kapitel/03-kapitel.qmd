@@ -1,0 +1,27 @@
+# Interpolation der Arealstatistik {#interpolation}
+
+## Problemstellung und Zielsetzung
+
+### Ausgangslage
+
+### Forschungsfrage
+
+## Hypothesen
+
+## Untersuchungsrahmen
+
+### Daten
+
+## Methode
+
+### Flussdiagramm
+
+### Schritte
+
+## Visualsierungen / Mokups
+
+## Architektur Analyse
+
+## Architektur Bericht
+
+## Zeitplan

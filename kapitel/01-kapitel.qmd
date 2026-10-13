@@ -1,0 +1,13 @@
+# Einleitung
+
+Das Projekt des Vertiefungsprofils Geoinformatik und Raumanalyse II beschäftigt sich mit der Datenqualität und dem Methodenvergleich von Landnutzungs- und Landbedeckungsdaten (LULC) im Hinblick auf die Quantifizierung von CO₂-Emissionen in der Schweiz.
+
+Im vergangenen Jahr lag der Schwerpunkt auf dem Vergleich verschiedener LULC-Datensätze mit der Arealstatistik (AS). Dazu wurden die Datensätze zunächst harmonisiert, um sie anschliessend miteinander vergleichen und hinsichtlich ihrer Übereinstimmungen und Unterschiede untersuchen zu können.
+
+Die diesjährige Projektarbeit knüpft an diese Untersuchungen an und behandelt zwei Schwerpunktthemen.
+
+Der erste Schwerpunkt befasst sich mit den Auswirkungen der Revision 2024–2026 der Arealstatistik auf die erfassten Landnutzungsübergänge und die daraus abgeleitete Kohlenstoffbilanz. Dabei soll untersucht werden, welchen Einfluss die Revision auf die Ergebnisse hat und in welchem Ausmass diese dadurch verändert werden.
+
+Der zweite Schwerpunkt beschäftigt sich mit der zeitlichen Interpolation der Arealstatistik. Ziel ist es, zwischen zwei Erhebungszeitständen jährliche Landnutzungsdaten abzuleiten und damit den Zeitpunkt von Landnutzungsänderungen genauer einzugrenzen. Zusätzlich soll untersucht werden, inwiefern sich dieser Ansatz auf das Jahr 2026 übertragen lässt.
+
+Das vorliegende Dokument beschreibt die Konzepte für die Bearbeitung dieser beiden Schwerpunktthemen. In Kapitel 2 wird das Konzept zur Untersuchung der Auswirkungen der AS-Revision vorgestellt. Kapitel 3 erläutert anschliessend das Konzept zur zeitlichen Interpolation der Arealstatistik.

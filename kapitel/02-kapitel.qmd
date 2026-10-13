@@ -1,0 +1,227 @@
+# Effekt der AS-Revision auf Übergänge und CO~2~ {#as-revision}
+
+## Problemstellung und Zielsetzung
+
+### Ausgangslage
+
+Die Arealstatistik (AS) des BFS erhebt auf einem 100-m-Gitter Bodennutzung und Bodenbedeckung. Dies seit 1985 in vier abgeschlossenen Erhebungen. Mit der laufenden 5. Erhebung vergleicht das BFS jeden Punkt mit allen früheren und korrigiert die Zeitreihe rückwirkend (Revision R4, 2024–2026). Dabei werden Nachvollzüge (eine früher übersehene Veränderung wird zum richtigen Zeitpunkt eingetragen) und unechte Veränderungen (eine frühere Klasse war falsch) unterschieden.
+
+Das Treibhausgasinventar (NIR) berechnet die CO~2~-Flüsse der Landnutzung aus den AS-Daten. Emissionen und Senken entstehen dort fast nur bei Übergängen zwischen Klassen. Das BFS hat den Effekt der Revision aber nur für Zustände publiziert: In der Erhebung 2013/18 hat sich bei 3.2 % der Punkte die Klasse geändert. Korrekturen früherer Erhebungen erfasst dieser Vergleich nicht, obwohl sie Übergänge verändern:
+
+| Version           | 2004/09 | 2013/18 | Übergang      |
+|-------------------|---------|---------|---------------|
+| vor der Revision  | Acker   | Wiese   | Acker → Wiese |
+| nach der Revision | Wiese   | Wiese   | kein Wechsel  |
+
+Der Punkt gilt in 2013/18 als unverändert, für das NIR entfällt aber ein Übergang samt Kohlenstoffbindung. Das NIR hat die revidierten Daten 2025 und 2026 übernommen und dabei nur die Flächen geprüft. Wie stark die Revision die Übergänge und damit die CO~2~-Flüsse verändert, ist nicht untersucht.
+
+### Forschungsfrage
+
+***Wie stark verändert die Revision 2024–2026 der Arealstatistik (unechte Veränderungen und Nachvollzug) die Übergänge zwischen den CO~2~-Kategorien des Treibhausgasinventars für 1985–2018, und wie stark verändert sich dadurch die Kohlenstoffbilanz dieser Übergänge?***
+
+#### Unterfragen
+
+- **FF1a** (Ausmass): *Wie viele Übergänge verschwinden, entstehen neu, wechseln die Klasse oder werden zeitlich verschoben?*
+- **FF1b** (Raum): *Wo wurde besonders viel korrigiert (Kanton, Siedlung vs. offenes Land)?*
+- **FF1c** (Kohlenstoff): Um wie viel Prozent verändert die Revision die Kohlenstoffbilanz der Übergänge?
+
+## Hypothesen
+
+- **H1:** Bei Übergängen ist der Revisionseffekt grösser als bei Zuständen.
+- **H2:** Acker ↔ Grasland dominiert den CO~2~-Effekt.
+- **H3:** Der Nachvollzug verschiebt Übergänge in frühere Perioden. Die scheinbare Beschleunigung der letzten Periode wird dadurch kleiner.
+- **H4:** Die Korrekturen sind räumlich nicht zufällig verteilt (Kanton, Siedlung vs. offenes Land).
+
+## Untersuchungsrahmen
+
+- Untersuchungsgebiet: Westschweiz (GE, VD, NE, FR)
+- Perioden: 1985→1997, 1997→2009, 2009→2018.
+- Klassen: die 17 Kombinationskategorien (CC) des NIR.
+
+### Daten
+
+| Datensatz | Quelle | Inhalt |
+|------------------------|------------------------|------------------------|
+| AS original (GE, VD, NE, FR) | BFS, Ausgabe vor der Revision | pro Punkt RELI, E, N, GMDE, Nutzung `LU*_46`, Bedeckung `LC*_27`, Flugjahr `FJ*`; 1985–2018 |
+| AS revidiert | BFS, Ausgabe 03.08.2026 | wie oben, zusätzlich `REVISION` (0/1/2) 1985–2025 |
+| Zuordnung NOLU × NOLC → CC | NIR 2026, Tab. 6-5 | 786 Kombinationen |
+| Kohlenstoffvorräte | NIR 2026, Tab. 6-4 | Biomasse und Mineralboden \[t C/ha\] pro CC und Höhenzone |
+| Höhenmodell | swisstopo DHM25 | Höhe für Höhenzone |
+| Kantonsgrenzen | Swisstopo, swissBOUNDARIES3D | Kantonsgebiet inkl. Seeanteile |
+| NFI-Regionen | WSL, Landesforstinventar | Jura, Mittelland, Voralpen, Alpen, Alpensüdseite |
+| Flächenstatistik NIR | NIR 2026, Tab. 6-7 | Flächen pro CC und Jahr |
+| Revisionsanalyse BFS | BFS 2026, Tab. 1 und 7 | Revisionseffekt auf Zustände 2013/18 |
+
+## Methode
+
+### Flussdiagramm
+
+![Flussdiagramm Schritte](/bilder/Bilder_Revision/Flussdiagramm.png){#fig-fluss fig-alt="Flussdiagramm Schritte"}
+
+### Schritte
+
+**Aufbereitung** *(Manuel und Melanie)*
+
+- Alte Fassung und revidierte Fassung über die Punktnummer RELI verbinden. So stehen pro Punkt beide Einstufungen für alle vier Erhebungen nebeneinander *(Manuel).*
+- Revisionsstand prüfen: Punkte mit REVISION 0, 1 und 2 pro Kanton zählen. Punkte mit 0 müssen in beiden Fassungen dieselben Codes haben, Punkte mit 1 oder 2 mindestens einen Unterschied. Zudem sicherstellen, dass für alle vier Kantone beide Fassungen vorliegen *(Manuel).*
+- Jedem Punkt pro Erhebung eine von 17 CO~2~-Kategorien (CC) zuweisen: Bodennutzung × Bodenbedeckung → CC nach NIR-Tab. 6-5, je für die alte und die revidierte Fassung *(Manuel).*
+- Kanton pro Punkt: Die Punkte werden über ihre Koordinaten (E_COORD, N_COORD) mit den Kantonsgrenzen aus swissBOUNDARIES3D verschnitten. Die Gemeindenummer GMDE_ID dient nur zur Kontrolle, da Seeflächen in der AS keiner Gemeinde zugeordnet sind, in swissBOUNDARIES3D aber innerhalb der Kantonsgrenzen liegen *(Melanie).*
+- Höhenzone pro Punkt: Höhe aus DHM25 an der Punktkoordinate, eingeteilt in die Höhenzonen nach NIR (Z1 \< 601 m, Z2 601–1200 m, Z3 \> 1200 m).
+- NFI-Region pro Punkt: Hektarmitte mit den Produktionsregionen des Landesforstinventars (WSL: Jura, Mittelland, Voralpen, Alpen, Alpensüdseite) verschneiden (Punkt-in-Polygon), gleich wie beim Kanton. Wird nur für Wald (CC12) gebraucht, da NIR-Tab. 6-4 den Waldvorrat nach NFI-Region angibt.
+- Ergebnis: Die Tabelle mit Kanton, Höhenzone und NFI-Region (punkte_lage) wird über RELI an punkte_cc angehängt. punkte_cc ist die gemeinsame Arbeitsdatei für alle weiteren Schritte.
+
+**Übergangsmatrizen** *(Manuel)*
+
+- Zwischen je zwei aufeinanderfolgenden Zeitständen zwei 17 × 17-Matrizen (original und revidiert)
+- Je eine Differenzmatrix (revidiert − original). Sie zeigt, welche Übergänge durch die Revision häufiger oder seltener werden.
+
+**Kennzahlen (FF1a)** *(Manuel)*
+
+- Jeden Punkt über alle vier Erhebungen verfolgen, Übergänge original und revidiert vergleichen.
+- Jeder abweichende Übergang kommt in eine Gruppe:
+  - verschwunden: original ein Wechsel, revidiert keiner
+
+  - neu: revidiert ein Wechsel, original keiner
+
+  - andere Klasse: in beiden ein Wechsel, aber von oder zu einer anderen CC
+
+  - verschoben: derselbe Wechsel, aber in einer anderen Periode (Nachvollzug zum tatsächlichen Zeitpunkt)
+- Umsetzung:
+  - Aus punkte_cc wird pro Punkt und Periode der Wechsel beider Fassungen bestimmt. z.B. Punkt A: original 97 (Gras)→09 (Siedlung), revidiert 85 (Gras)→97 (Siedlung).
+
+  - Zuerst werden verschobene Wechsel erkannt (gleicher Wechsel, andere Periode, wie bei Punkt A), damit sie nicht doppelt als „verschwunden“ und „neu“ zählen.
+
+  - Danach werden die übrigen Abweichungen pro Periode eingeteilt.\
+    z.B. original Gras→Acker, revidiert Gras→Siedlung = „andere Klasse“\
+    (R, case_when).
+- Ausgewiesen pro Periode als Anteil an allen Übergängen und nach Kanton.
+- „verschoben“ zeigt pro Periode, wie viele Übergänge in eine frühere Periode wandern → Prüfung von H3.
+
+**Räumliche Muster (FF1b)** *(Melanie)*
+
+- Revisionsdichte = Anzahl korrigierter Punkte ÷ Anzahl aller Punkte in einer Gruppe, über alle Perioden zusammen
+- Ausgewertet:
+  - pro Kanton
+
+  - Siedlung vs. offenes Land
+
+  - jeweils zusätzlich getrennt nach Revisionstyp, damit sich die beiden Muster nicht vermischen:
+
+    - Nachvollzug: erwartet dort, wo sich wirklich etwas verändert, z. B. am Siedlungsrand
+
+    - unechte Veränderung: erwartet dort, wo Klassen schwer unterscheidbar sind, z. B. Acker / Grasland
+
+  - als Karte im 2-km-Raster (eine Zelle enthält 400 Punkte), nur Gesamtdichte:
+
+    - Die endgültige Zellgrösse wird nach der Zählung in Schritt 1 festgelegt.
+
+    - Pro Zelle wird die Revisionsdichte berechnet und als Karte dargestellt (R, ggplot2).
+- Prüfung von H4: Wären die Korrekturen zufällig verteilt, müsste die Revisionsdichte in allen Kantonen, in Siedlung und offenem Land sowie auf der Karte ungefähr gleich sein.
+
+**Kohlenstoffbilanz (FF1c)** *(Melanie)*
+
+- Kohlenstoffvorrat pro CC und Höhenzone aus NIR-Tab. 6-4 (in t C pro ha), für Wald (CC12) zusätzlich nach NFI-Region (National-Forest-Inventory)
+  - Jeder AS-Punkt steht für 1 ha, deshalb kann der Vorrat direkt pro Punkt verwendet werden.
+- Pro Übergang: ΔC = Vorrat neue CC − Vorrat alte CC, mit der Höhenzone (und bei Wald der NFI-Region) des Punktes
+  - Umsetzung: Für jeden Punkt mit Wechsel werden Von-CC, Zu-CC, Höhenzone und NFI-Region aus *punkte_cc* genommen und die beiden Vorräte aus der Nachschlagetabelle angehängt (Join).
+
+  - Positiv = Kohlenstoffaufnahme, negativ = Kohlenstoffverlust
+- Summe pro Periode und Übergangsart, einmal original und einmal revidiert
+- Ergebnis als relative Differenz in %: (Summe revidiert − Summe original) ÷ Summe original × 100
+  - Beispiel: original 10.6 t C, revidiert 15.9 t C → die Revision verändert die Wirkung der Übergänge Acker → Grasland um +50 %.
+
+  - Absolute Werte werden nicht ausgewiesen, da diese vereinfachte Methode vom NIR abweicht.
+- Grenzen:
+  - Im NIR wird die Änderung des Bodenkohlenstoffs über 20 Jahre ab dem Wechseljahr verteilt. Hier wird sie vollständig der Periode des Übergangs zugeordnet.
+
+  - Schnittstelle zu Interpolation: Die zeitliche Interpolation schätzt das Wechseljahr pro Übergang und würde diese Verteilung ermöglichen. Sie wird im Rahmen dieser Arbeit nicht umgesetzt, weil die Ergebnisse voraussichtlich nicht rechtzeitig vorliegen.
+- Prüfung von H2: Es wird verglichen, welcher Anteil der gesamten Differenz auf die Übergänge zwischen Acker und Grasland fällt.
+
+**Plausibilisierung** *(Melanie)*
+
+- Abgleich mit BFS 2026 (Zustände 2013/18) und mit den Flächen in NIR-Tab. 6-7.
+
+## Visualisierung / Mockups
+
+Alle Abbildungen werden mit ggplot2 statisch erstellt. Die Mockups zeigen Aufbau und Darstellung mit fiktiven Werten. Im Mockup sind die Klassen auf 6 Hauptkategorien zusammengefasst, im Bericht werden die 17 CC verwendet.
+
+| Nr. | Abbildung | Frage | Wer |
+|------------------|------------------|------------------|------------------|
+| @fig-matrix | Heatmap der Differenzmatrix (revidiert − original), eine pro Periode | FF1a | Manuel |
+| @fig-arten | Gestapelte Balken: verschwunden / neu / andere Klasse / verschoben pro Periode | FF1a | Manuel |
+| @fig-karte | Karte der Revisionsdichte im 2-km-Raster | FF1b | Melanie |
+| @fig-kanton | Gestapelte Balken: Revisionsdichte pro Kanton, Siedlung vs. offenes Land, nach Revisionstyp | FF1b | Melanie |
+| @fig-kohlenstoff | Balken: relative Differenz der Kohlenstoffbilanz pro Periode und Übergangsart | FF1c | Melanie |
+
+![Differenz der Übergangsmatrizen (revidiert − original) pro Periode. Rot = Übergang häufiger, blau = seltener nach der Revision.](/bilder/Bilder_Revision/Uebergangsmatrizen.png){#fig-matrix fig-alt="Mockup 1 Differenzmatrix"}
+
+![Art der Änderung pro Periode. „verschoben“ zeigt Übergänge, die durch den Nachvollzug in eine andere Periode wandern (H3).](/bilder/Bilder_Revision/Balkendiagramm_Uebergaenge.png){#fig-arten fig-alt="Mockup 2 Änderungsarten"}
+
+![Revisionsdichte im 2-km-Raster, Westschweiz (Umriss schematisch).](/bilder/Bilder_Revision/Karte.png){#fig-karte fig-alt="Mockup 3 Revisionsdichte Karte"}
+
+![Revisionsdichte nach Kanton und Raumtyp, getrennt nach Revisionstyp.](/bilder/Bilder_Revision/Balkendiagramm_Revisionsdichte.png){#fig-kanton fig-alt="Mockup 3 Revisionsdichte Karte"}
+
+![Relative Differenz der Kohlenstoffbilanz (revidiert gegenüber original) pro Periode und Übergangsart.](/bilder/Bilder_Revision/Balkendiagramm_Kohlenstoff.png){#fig-kohlenstoff fig-alt="Mockup 4 CO2-Differenz"}
+
+## Architektur Analyse
+
+| Skript (`analysis/`) | Inhalt | Wer |
+|------------------------|------------------------|------------------------|
+| 00_grundlagen.qmd | Nachschlagetabellen erfassen: NIR-Tab. 6-5 (LU × LC → CC) und Tab. 6-4 (Kohlenstoffvorräte) | Manuel (6-5), Melanie (6-4) |
+| 01a_aufbereitung.qmd | Join über RELI, Revisionsstand prüfen, CC zuweisen → punkte_cc.parquet | Manuel |
+| 01b_lage.qmd | Kanton, Höhenzone und NFI-Region pro Punkt an den AS-Rohdaten → punkte_lage.parquet, wird über RELI an punkte_cc angehängt | Melanie |
+| 02_matrizen.qmd | Übergangsmatrizen, Kennzahlen inkl. „verschoben“ | Manuel |
+| 03_raum.qmd | 2-km-Raster, Revisionsdichte pro Kanton und Siedlung/offen, Karte | Melanie |
+| 04_kohlenstoff.qmd | Kohlenstoffbilanz, relative Differenz | Melanie |
+| 05_plausibilisierung.qmd | Abgleich mit BFS 2026 (Tab. 1 und 7) und NIR-Tab. 6-7 | Melanie |
+
+## Architektur Bericht
+
+| Kapitel (report/) | Inhalt | Abbildungen/ Tabellen | Wer |
+|------------------|------------------|------------------|------------------|
+| 01_einleitung.qmd | Einleitung zum Teilprojekt, Problemstellung, Fragestellung FF1a–FF1c, Hypothesen | – | Melanie |
+| 02_grundlagen.qmd | Arealstatistik, Revision R4 (Nachvollzug, unechte Veränderung), CC und NIR | Beispieltabelle Revision | Man:<br>AS, R4, CC<br>Mel: NIR, C-Vorrat |
+| 03_daten_methode.qmd | Untersuchungsgebiet, Daten, Methodenschritte 1–6, Flussdiagramm | Flussdiagramm, Datentabelle | beide |
+| 04_ausmass.qmd | Resultate FF1a: Übergangsmatrizen, Kennzahlen, „verschoben“ | @fig-matrix, @fig-arten | Manuel |
+| 05_raum.qmd | Resultate FF1b: Revisionsdichte nach Kanton, Siedlung/offen, Karte | @fig-karte, @fig-kanton | Melanie |
+| 06_kohlenstoff.qmd | Resultate FF1c: relative Differenz der Kohlenstoffbilanz | @fig-kohlenstoff | Melanie |
+| 07_diskussion.qmd | Hypothesen beantworten, Plausibilisierung, Grenzen, Schnittstelle zur anderen Gruppe | Tabelle Plausibilisierung | beide |
+| 08_fazit.qmd | Kernaussagen, Ausblick | – | Manuel |
+| `_quarto.yml` | Reihenfolge der Kapitel, Layout, Literatur (.bib) | – | beide |
+
+## Aufgabenteilung
+
+|   | Manuel | Melanie |
+|------------------------|------------------------|------------------------|
+| Daten | AS-Ausgaben und CC-Zuordnung (NIR-Tab. 6-5) | swissBOUNDARIES3D, DHM25 und NFI-Regionen, Tab. 6-4 als Nachschlagetabelle, Vergleichswerte für die Plausibilisierung |
+| Analyse | Join, CC, Matrizen, Kennzahlen inkl. „verschoben“ | Kanton, Höhenzone und NFI-Region pro Punkt, Revisionsdichte, Karte, Kohlenstoffbilanz, Plausibilisierung |
+| Abbildungen | @fig-matrix, @fig-arten | @fig-karte, @fig-kanton, @fig-kohlenstoff |
+| Bericht | 02 Grundlagen: Arealstatistik, Revision R4, CC, 03 Methode Schritte 1–3, 04 Resultate FF1a, 07 Diskussion H1 und H3, 08 Fazit | 01 Einleitung, 02 Grundlagen: NIR und Kohlenstoffvorräte, 03 Methode Schritte 4–5, 05 Resultate FF1b, 06 Resultate FF1c, 07 Diskussion H2 und H4, Grenzen, Schnittstelle zur anderen Gruppe |
+| Präsentation | Folien FF1a | Folien FF1b/c |
+| gemeinsam | Konzept, Kapitel des anderen gegenlesen, Layout und Literatur (`_quarto.yml`) |  |
+
+Parallel arbeiten:
+
+- Kanton, Höhenzone und NFI-Region direkt an den AS-Rohdaten zuordnen: Die Koordinaten (E, N) sind in beiden Fassungen gleich, dafür braucht es den Join nicht. Ergebnis ist eine eigene Tabelle (RELI, Kanton, Höhenzone, NFI-Region), die später über RELI an punkte_cc angehängt wird.
+- R-Skripte für @fig-karte, @fig-kanton und @fig-kohlenstoff mit Testdaten schreiben: An den Spalten von punkte_cc orientieren (RELI, E, N, Periode, CC original, CC revidiert, REVISION). Dann eine Testtabelle mit genau diesen Spalten bauen: echte Punkte mit Kanton, Höhenzone und NFI-Region aus der eigenen Tabelle, dazu zufällige CC-Werte, bei rund 5 % der Punkte wird die revidierte CC zufällig geändert und REVISION gesetzt. Damit laufen Revisionsdichte, Karten und Kohlenstoffbilanz schon durch. Ist punkte_cc fertig, wird nur der Dateipfad ausgetauscht.
+
+## Zeitplan
+
+| bis | Manuel | Melanie | gemeinsam |
+|------------------|------------------|------------------|------------------|
+| **Mi 14.10.** Konzeptentwurf | Datentabelle, Mockups, Architektur, Flussdiagramm, Fragestellungen ausarbeiten |  | gegenseitig lesen, abgeben |
+| **Fr 23.10.** Konzept | Join über RELI, Tab. 6-5 als Nachschlagetabelle | Kanton, Höhenzone und NFI-Region pro Punkt (direkt an AS-Rohdaten), Tab. 6-4 als Nachschlagetabelle | Feedback<br>MS1 / Konzept einarbeiten, (neue) Literatur für eigenen Grundlagen-Teil |
+| **Mo 02.11.** Literaturteil | 02 Grundlagen: Arealstatistik und Revision R4 und CC-Zuordnung | 01 Einleitung, 02 Grundlagen: NIR/Treibhausgasinventar und Kohlenstoffvorräte | Literaturteil zusammenführen, Literatur (.bib) anlegen, abgeben |
+| **Mo 09.11.** | CC zuweisen, punkte_cc fertig | Skripte für @fig-karte, @fig-kanton und @fig-kohlenstoff mit Testdaten fertig | Zwischenstand abgleichen |
+| **Mo 16.11.** Literaturteil final | Feedback Literaturteil einarbeiten | Feedback Literaturteil einarbeiten | Schlusslesung, Literaturteil final abgeben |
+| **Mi 18.11.** | Übergangsmatrizen, Kennzahlen inkl. „verschoben“, @fig-matrix, @fig-arten | Revisionsdichte und Kohlenstoffbilanz mit echten Daten, @fig-karte, @fig-kanton und @fig-kohlenstoff | erste Resultate vorbereiten für MS |
+| **Mi 25.11.**<br>(23.11 MS) | 03 Daten/Methode Schritte 1–3, 04 Resultate FF1a | 03 Daten/Methode Schritte 4–5, 05 Resultate FF1b, 06 Resultate FF1c | Kapitel des anderen gegenlesen |
+| **Mi 02.12.** Bericht | 07 Diskussion H1 und H3, 08 Fazit | 07 Diskussion H2 und H4, Grenzen, Schnittstelle zur anderen Gruppe, Plausibilisierung | Layout und Literatur (`_quarto.yml`), Schlusslesung, abgeben |
+| **21. / 22.12.** | Folien FF1a | Folien FF1b/c | Überarbeitung Bericht, Präsentation |
+
+## Optionale Erweiterungen
+
+- Effekt LV03 LV95
+- Semantischer Ähnlichkeitsvergleich der 17 CC
+- Bodenkohlenstoff über 20 Jahre verteilen, mit dem Wechseljahr aus der zeitlichen Interpolation der anderen Gruppe
+- Ausweitung auf die 6 Deutschschweizer Kantone (LU, AG, JU, SO, BL, BS), sobald Daten vor der Revision vorliegen
