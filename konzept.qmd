@@ -6,7 +6,7 @@ author:
   - Melanie Schiefermüller
   - Manuel Hubler
   - Tobias Schulthess
-date: 2026-10-06
+date: today
 bibliography: literatur.bib
 ---
 
@@ -16,3 +16,4 @@ bibliography: literatur.bib
 
 {{< include kapitel/03-kapitel.qmd >}}
 
+{{< include kapitel/99-literatur.qmd >}}

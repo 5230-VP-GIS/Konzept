@@ -19,6 +19,7 @@ number-sections: true
 format:
   pdf:
     pdf-engine: xelatex
+    fig-pos: 'H'
     documentclass: scrartcl          # KOMA-Script, Artikel-Klasse (kein Seitenumbruch pro Kapitel)
     papersize: a4
     fontsize: 11pt

@@ -41,7 +41,7 @@ Der Punkt gilt in 2013/18 als unverändert, für das NIR entfällt aber ein Übe
 ### Daten
 
 | Datensatz | Quelle | Inhalt |
-|------------------------|------------------------|------------------------|
+|----------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | AS original (GE, VD, NE, FR) | BFS, Ausgabe vor der Revision | pro Punkt RELI, E, N, GMDE, Nutzung `LU*_46`, Bedeckung `LC*_27`, Flugjahr `FJ*`; 1985–2018 |
 | AS revidiert | BFS, Ausgabe 03.08.2026 | wie oben, zusätzlich `REVISION` (0/1/2) 1985–2025 |
 | Zuordnung NOLU × NOLC → CC | NIR 2026, Tab. 6-5 | 786 Kombinationen |
@@ -56,7 +56,7 @@ Der Punkt gilt in 2013/18 als unverändert, für das NIR entfällt aber ein Übe
 
 ### Flussdiagramm
 
-![Flussdiagramm Schritte](/bilder/Bilder_Revision/Flussdiagramm.png){#fig-fluss fig-alt="Flussdiagramm Schritte"}
+![Flussdiagramm Schritte](/bilder/Bilder_Revision/Flussdiagramm.png){#fig-fluss fig-alt="Flussdiagramm Schritte" width="14cm"}
 
 ### Schritte
 
@@ -146,27 +146,27 @@ Der Punkt gilt in 2013/18 als unverändert, für das NIR entfällt aber ein Übe
 Alle Abbildungen werden mit ggplot2 statisch erstellt. Die Mockups zeigen Aufbau und Darstellung mit fiktiven Werten. Im Mockup sind die Klassen auf 6 Hauptkategorien zusammengefasst, im Bericht werden die 17 CC verwendet.
 
 | Nr. | Abbildung | Frage | Wer |
-|------------------|------------------|------------------|------------------|
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
 | @fig-matrix | Heatmap der Differenzmatrix (revidiert − original), eine pro Periode | FF1a | Manuel |
 | @fig-arten | Gestapelte Balken: verschwunden / neu / andere Klasse / verschoben pro Periode | FF1a | Manuel |
 | @fig-karte | Karte der Revisionsdichte im 2-km-Raster | FF1b | Melanie |
 | @fig-kanton | Gestapelte Balken: Revisionsdichte pro Kanton, Siedlung vs. offenes Land, nach Revisionstyp | FF1b | Melanie |
 | @fig-kohlenstoff | Balken: relative Differenz der Kohlenstoffbilanz pro Periode und Übergangsart | FF1c | Melanie |
 
-![Differenz der Übergangsmatrizen (revidiert − original) pro Periode. Rot = Übergang häufiger, blau = seltener nach der Revision.](/bilder/Bilder_Revision/Uebergangsmatrizen.png){#fig-matrix fig-alt="Mockup 1 Differenzmatrix"}
+![Differenz der Übergangsmatrizen (revidiert − original) pro Periode. Rot = Übergang häufiger, blau = seltener nach der Revision.](/bilder/Bilder_Revision/Uebergangsmatrizen.png){#fig-matrix width="12cm"}
 
-![Art der Änderung pro Periode. „verschoben“ zeigt Übergänge, die durch den Nachvollzug in eine andere Periode wandern (H3).](/bilder/Bilder_Revision/Balkendiagramm_Uebergaenge.png){#fig-arten fig-alt="Mockup 2 Änderungsarten"}
+![Art der Änderung pro Periode. „verschoben“ zeigt Übergänge, die durch den Nachvollzug in eine andere Periode wan-dern (H3).](/bilder/Bilder_Revision/Balkendiagramm_Uebergaenge.png){#fig-arten width="12cm"}
 
-![Revisionsdichte im 2-km-Raster, Westschweiz (Umriss schematisch).](/bilder/Bilder_Revision/Karte.png){#fig-karte fig-alt="Mockup 3 Revisionsdichte Karte"}
+![Revisionsdichte im 2-km-Raster, Westschweiz (Umriss schematisch).](/bilder/Bilder_Revision/Karte.png){#fig-karte width="12cm"}
 
-![Revisionsdichte nach Kanton und Raumtyp, getrennt nach Revisionstyp.](/bilder/Bilder_Revision/Balkendiagramm_Revisionsdichte.png){#fig-kanton fig-alt="Mockup 3 Revisionsdichte Karte"}
+![Revisionsdichte nach Kanton und Raumtyp, getrennt nach Revisionstyp.](/bilder/Bilder_Revision/Balkendiagramm_Revisionsdichte.png){#fig-kanton width="12cm"}
 
-![Relative Differenz der Kohlenstoffbilanz (revidiert gegenüber original) pro Periode und Übergangsart.](/bilder/Bilder_Revision/Balkendiagramm_Kohlenstoff.png){#fig-kohlenstoff fig-alt="Mockup 4 CO2-Differenz"}
+![Relative Differenz der Kohlenstoffbilanz (revidiert gegenüber original) pro Periode und Übergangsart.](/bilder/Bilder_Revision/Balkendiagramm_Kohlenstoff.png){#fig-kohlenstoff width="12cm"}
 
 ## Architektur Analyse
 
 | Skript (`analysis/`) | Inhalt | Wer |
-|------------------------|------------------------|------------------------|
+|------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 00_grundlagen.qmd | Nachschlagetabellen erfassen: NIR-Tab. 6-5 (LU × LC → CC) und Tab. 6-4 (Kohlenstoffvorräte) | Manuel (6-5), Melanie (6-4) |
 | 01a_aufbereitung.qmd | Join über RELI, Revisionsstand prüfen, CC zuweisen → punkte_cc.parquet | Manuel |
 | 01b_lage.qmd | Kanton, Höhenzone und NFI-Region pro Punkt an den AS-Rohdaten → punkte_lage.parquet, wird über RELI an punkte_cc angehängt | Melanie |
@@ -178,7 +178,7 @@ Alle Abbildungen werden mit ggplot2 statisch erstellt. Die Mockups zeigen Aufbau
 ## Architektur Bericht
 
 | Kapitel (report/) | Inhalt | Abbildungen/ Tabellen | Wer |
-|------------------|------------------|------------------|------------------|
+|-------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
 | 01_einleitung.qmd | Einleitung zum Teilprojekt, Problemstellung, Fragestellung FF1a–FF1c, Hypothesen | – | Melanie |
 | 02_grundlagen.qmd | Arealstatistik, Revision R4 (Nachvollzug, unechte Veränderung), CC und NIR | Beispieltabelle Revision | Man:<br>AS, R4, CC<br>Mel: NIR, C-Vorrat |
 | 03_daten_methode.qmd | Untersuchungsgebiet, Daten, Methodenschritte 1–6, Flussdiagramm | Flussdiagramm, Datentabelle | beide |
@@ -192,7 +192,7 @@ Alle Abbildungen werden mit ggplot2 statisch erstellt. Die Mockups zeigen Aufbau
 ## Aufgabenteilung
 
 |   | Manuel | Melanie |
-|------------------------|------------------------|------------------------|
+|-----------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Daten | AS-Ausgaben und CC-Zuordnung (NIR-Tab. 6-5) | swissBOUNDARIES3D, DHM25 und NFI-Regionen, Tab. 6-4 als Nachschlagetabelle, Vergleichswerte für die Plausibilisierung |
 | Analyse | Join, CC, Matrizen, Kennzahlen inkl. „verschoben“ | Kanton, Höhenzone und NFI-Region pro Punkt, Revisionsdichte, Karte, Kohlenstoffbilanz, Plausibilisierung |
 | Abbildungen | @fig-matrix, @fig-arten | @fig-karte, @fig-kanton, @fig-kohlenstoff |
@@ -208,7 +208,7 @@ Parallel arbeiten:
 ## Zeitplan
 
 | bis | Manuel | Melanie | gemeinsam |
-|------------------|------------------|------------------|------------------|
+|------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Mi 14.10.** Konzeptentwurf | Datentabelle, Mockups, Architektur, Flussdiagramm, Fragestellungen ausarbeiten |  | gegenseitig lesen, abgeben |
 | **Fr 23.10.** Konzept | Join über RELI, Tab. 6-5 als Nachschlagetabelle | Kanton, Höhenzone und NFI-Region pro Punkt (direkt an AS-Rohdaten), Tab. 6-4 als Nachschlagetabelle | Feedback<br>MS1 / Konzept einarbeiten, (neue) Literatur für eigenen Grundlagen-Teil |
 | **Mo 02.11.** Literaturteil | 02 Grundlagen: Arealstatistik und Revision R4 und CC-Zuordnung | 01 Einleitung, 02 Grundlagen: NIR/Treibhausgasinventar und Kohlenstoffvorräte | Literaturteil zusammenführen, Literatur (.bib) anlegen, abgeben |
