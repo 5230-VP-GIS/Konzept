@@ -1,7 +1,183 @@
-## Ausgangslage
+# Landnutzungswechsel in der Arealstatistik {#sec-interpolation}
+
+## Problemstellung und Zielsetzung
+
+### Ausgangslage
 
 Die Schweizer Arealstatistik (AREA) erfasst Bodennutzung und Bodenbedeckung über ein flächendeckendes Stichprobenraster von 100 × 100 m (rund 4,1 Mio. Punkte) mittels Luftbildinterpretation in mehrjährigen Intervallen von ca. 6 bis 12 Jahren [@zotero-item-154]. Damit lassen sich langfristige Trends der Landschaftsentwicklung verlässlich dokumentieren [@blackReconsideringStatusQuo2023; @blackBroadeningHorizonLand2024]. Hochfrequente oder temporäre Nutzungswechsel, die innerhalb einer Erhebungsperiode auftreten, bleiben zwischen den einzelnen Erhebungsständen jedoch weitgehend unentdeckt.
 
 Ein prägnantes Beispiel für solche hochfrequenten Dynamiken findet sich in der Landwirtschaft bei Wechseln zwischen Ackerland und Grünland. Hierbei muss methodisch strikt zwischen regulären Fruchtfolgerotationen (insbesondere dem Anbau temporärer Kunstwiesen, die fachlich im Treibhausgasinventar als Cropland remaining Cropland verbleiben) und tatsächlichen, dauerhaften Landnutzungsänderungen (z. B. Umbruch von Dauergrünland) unterschieden werden . Während die Arealstatistik aufgrund ihres mehrjährigen Erhebungsintervalls Gefahr läuft, diese Dynamiken zu übersehen oder falsch einzustufen, ermöglichen die jährlichen, parzellenscharfen Kulturdeklarationen des Agrarpolitischen Informationssystems (AGIS) eine lückenlose Erfassung dieser Wechsel.
 
 Für das nationale Treibhausgasinventar (NIR – National Inventory Report / LULUCF) ist diese Differenzierung entscheidend: Nur reale Nutzungsänderungen zwischen Acker- und Grünland lösen relevante Veränderungen der Bodenkohlenstoffvorräte sowie der Biomasse aus, die als CO₂-Emissionen oder -Senken bilanziert werden [@ipccGoodPracticeGuidance2003]. Gemäss den IPCC-Richtlinien verbleiben umgenutzte Flächen standardmässig für 20 Jahre in einer Übergangskategorie (Land Converted to …) [@ipccGoodPracticeGuidance2003]. Werden Landnutzungsänderungen durch die Erhebungsintervalle der Arealstatistik nicht oder erst verzögert erkannt – oder werden temporäre Fruchtfolgewechsel irrtümlich als permanente Umnutzung interpretiert –, kann dies zu fehlerhaften Zuweisungen zu den IPCC-Landnutzungskategorien und zu Verfälschungen in der nationalen Klimaberichterstattung führen [@aebi5230GeoinformatikUnda].
+
+### Forschungsfrage
+
+Inwiefern beeinflussen Wechsel zwischen Ackerland und Grünland, die aufgrund der Erhebungsintervalle der Schweizer Arealstatistik nicht erkannt werden, die Erfassung von Landnutzungsänderungen im Schweizer Treibhausgasinventar?
+
+#### Unterfragen
+
+Block 1: Ausmass, Fruchtfolge und Sichtbarkeit
+
+- **1a.** Wie häufig treten Wechsel zwischen Ackerland und Grünland auf, die anhand der jährlichen AGIS-Daten identifiziert werden können?
+- **1b.** Welcher Anteil dieser Wechsel ist auf reguläre Fruchtfolgen, insbesondere den Anbau temporärer Kunstwiesen, zurückzuführen?
+- **1c.** Welcher Anteil der identifizierten Wechsel bleibt aufgrund der Erhebungsintervalle der Schweizer Arealstatistik unerkannt und wie unterscheiden sich fruchtfolgebedingte und andere Wechsel hinsichtlich ihrer Sichtbarkeit?
+
+Block 2: Konsequenzen für die Klimaberichterstattung (LULUCF)
+
+- **2.** Inwiefern sind die durch die Schweizer Arealstatistik nicht erfassten Wechsel gemäss der Methodik des Schweizer Treibhausgasinventars als Landnutzungsänderungen relevant und welche Konsequenzen könnten sich daraus für die Zuordnung zu den IPCC-Landnutzungskategorien ergeben?
+
+## Untersuchungsrahmen
+
+Die Untersuchung konzentriert sich auf die Stichprobenpunkte der Schweizer Arealstatistik, welche in den ausgewählten Erhebungsständen als Ackerland oder Grünland klassifiziert sind. Für diese Punkte wird die jährliche landwirtschaftliche Nutzung aus den AGIS-Daten rekonstruiert.
+
+Die Untersuchung umfasst die folgenden Aspekte:
+
+- **Räumlicher Rahmen:** Stichprobenkanton Thurgau
+- **Zeitlicher Rahmen:** Mehrere aufeinanderfolgende Erhebungsperioden der Arealstatistik, soweit die jährlichen AGIS-Daten verfügbar und vergleichbar sind.
+- **Untersuchungseinheit:** Stichprobenpunkte der Arealstatistik mit konvertiertem Wert LULULC Ackerland oder Grünland.
+- **Zielgrösse:** Häufigkeit und Anteil zwischenzeitlicher, in den Endpunktvergleichen nicht sichtbarer Nutzungswechsel.
+
+### Daten
+
+1.  Arealstatistik des Bundesamts für Statistik (BFS)
+    - 6-12 Jährliche klassifizierte Stichprobenpunkte im 100x100m Raster
+2.  Agrarpolitisches Informationssystem (AGIS)
+    - Die jährlichen Kulturangaben auf Parzellenebene
+3.  AV-Daten
+    - Die Geometrien der landwirtschaftlichen Parzellen im Kanton Thurgau
+
+## Methode
+
+### Flussdiagramm
+
+![Flussdiagramm der Methode](/bilder/Bilder_Landnutzung/Flussdiagramm.png){#fig-interp-flussdiagramm fig-pos="H" width="15cm"}
+
+### Vorgehen
+
+1.  Aufbereitung
+
+- Arealstatistik:
+  - Punkte im Kanton Thurgau selektieren: Die Koordinaten (E, N) werden mit swissBOUNDARIES3D verschnitten. GMDE_ID dient nur zur Kontrolle.
+  - Pro Punkt und Erhebung das Flugjahr (FJ\*) übernehmen.
+  - Jedem Punkt pro Erhebung eine CC zuweisen: Nutzung × Bedeckung $\rightarrow$ CC nach NIR-Tab. 6-5.
+  - Untersuchungseinheit sind Punkte, die in mindestens einer Erhebung als Acker oder Grasland eingestuft sind.
+  - *Kontrolle:* Anzahl Punkte pro Erhebung und fehlende Flugjahre prüfen.
+- AGIS:
+  - Kulturcodes über alle Jahre harmonisieren und CC zuweisen.
+
+  - *Kontrolle:* Jeder Code ist genau einer Klasse zugeordnet, und es bleiben keine Codes übrig.
+- Räumliche Verknüpfung
+  - Über Räumliche Verknüpfung AGIS (mit AV-Geometrie als Referenz) der Arealstatistik zuweisen. So entsteht Punktezeitreihe, welche für die späteren Arbeitschritte als Grundlage dient.
+
+  - *Kontrolle:* Punkte ohne Treffer, mit flaggen. Geometrieänderungen über die Jahre prüfen.
+
+2.  Datenkontrolle
+
+- Vollständigkeit
+  - Lücken in den Zeitreihen finden und ausweisen.
+- Plausibilität
+  - Prüfen, ob die Arealstatistik und das die AGIS-Punktezeitreihe im jeweiligen Jahr übereinstimmen.
+- Abgleich
+  - Die AGIS-Klasse im Flugjahr mit der CC der AS vergleichen und daraus eine Übereinstimmungsmatrix bilden. Dabei definitorische Unterschiede von Fehlern trennen: Eine Kunstwiese erscheint auf dem Luftbild als Grasland, das ist kein Fehler.
+
+3.  Häufigkeit der Wechsel (FF1a)
+
+- Pro Punkt die jährliche Abfolge der Klassen bilden. Ein Wechsel liegt vor, wenn die Klasse im Jahr $t$ eine andere ist als im Jahr $t-1$ (Acker $\leftrightarrow$ Grasland).
+- Zwei Lesarten parallel rechnen:
+  - Luftbild: Die Kunstwiese zählt als Grasland.
+
+  - NIR: Die Kunstwiese zählt als Acker.
+- Beispiel Punkt 1 mit der Abfolge A-A-K-K-A-A-K-K-A: Das ergibt in der Lesart Luftbild 4 Wechsel, in der Lesart NIR keinen.
+- Ausgewiesen werden die Wechsel pro Punkt und Periode sowie der Anteil der Punkte mit mindestens einem Wechsel.
+
+4.  Typisierung der Wechsel (FF1b)
+
+- Jeder Wechsel kommt in eine Gruppe:
+  - Fruchtfolge: Acker $\leftrightarrow$ Kunstwiese, danach wieder Acker
+
+  - Umbruch: Dauergrünland $\rightarrow$ Acker, und der Acker bleibt mindestens $n$ Jahre
+
+  - Begrünung: Acker $\rightarrow$ Dauergrünland, und das Grünland bleibt mindestens $n$ Jahre
+
+  - Unklar: Wechsel in einem Einzeljahr oder Codefehler
+
+5.  Sichtbarkeit in der Arealstatistik (FF1c)
+
+- Für jede Periode die CC der AS an beiden Flugjahren mit dem AGIS-Verlauf dazwischen vergleichen. Jeder Punkt kommt in eine Gruppe:
+  - Unerkannt: Die AS zeigt keine Änderung, AGIS einen Wechsel.
+
+  - Erkannt: Die AS zeigt eine Änderung, AGIS eine dauerhafte Änderung.
+
+  - Scheinbar: Die AS zeigt eine Änderung, AGIS nur Fruchtfolge.
+
+  - Stabil: Keine der beiden Quellen zeigt eine Änderung.
+
+6.  Relevanz für LULUCF (FF2)
+
+- Nur Umbruch und Begrünung sind Landnutzungsänderungen im Sinne des NIR.
+- Daraus ergeben sich drei Fehlerarten, ausgewiesen als Fläche (1 Punkt = 1 ha):
+  - Nicht erfasst: Umbruch oder Begrünung, aber unerkannt
+
+  - Verzögert: Änderung erkannt, aber falsch datiert. Dadurch verschiebt sich der Beginn der 20-jährigen Übergangsphase.
+
+  - Fälschlich: scheinbare Änderung
+
+7.  Plausibilisierung
+
+- Die Ackerfläche und die Fläche Grasland im Thurgau mit der Agrarstatistik des BFS und mit NIR-Tab. 6-7 vergleichen.
+
+## Visualisierungen / Mockups
+
+Für die Präsentation der Ergebnisse werden folgende Visualisierungen vorgesehen:
+
+1.  Zeitreihe eines einzelnen Stichprobenpunkts
+
+Ein Zeitstrahl stellt die jährliche Landnutzung eines ausgewählten Stichprobenpunkts anhand der AGIS-Daten dar. Die Erhebungszeitpunkte der Arealstatistik werden zusätzlich markiert, um zwischenzeitliche Nutzungswechsel sichtbar zu machen.
+
+![Zeitreihe eines Stichprobenpunktes aus der Arealstatistik mit seinen jährlichen Änderungen, Quelle: ChatGPT (erstellt am 14.10.2026)](/bilder/Bilder_Landnutzung/01-Jährliche%20Arealstatistik%20mit%20Nutzungswechseln.png){#fig-interp-zeitreihe fig-pos="H" width="14cm"}
+
+2.  Vergleich zwischen AGIS und Arealstatistik
+
+Mithilfe von Übergangs- und Vergleichsmatrizen werden die Landnutzungskategorien der Arealstatistik und der AGIS-Daten gegenübergestellt. Dadurch können sichtbare Nutzungsänderungen sowie Unterschiede zwischen den beiden Datensätzen untersucht werden.
+
+![Vergleich der AGIS und Arealstatistik mit Übergangs- und Vergleichsmatrizen, Quelle: ChatGPT (erstellt am 14.10.2026)](/bilder/Bilder_Landnutzung/02-Vergleichsmatrix%20und%20Übergangsmatrix%20der%20Landnutzung.png){#fig-interp-vergleich fig-pos="H" width="14cm"}
+
+3.  Anteil nicht sichtbarer Nutzungswechsel
+
+Ein Balkendiagramm zeigt für jede untersuchte Erhebungsperiode den Anteil der Stichprobenpunkte, bei denen trotz identischer Anfangs- und Endkategorie zwischenzeitliche Nutzungswechsel festgestellt werden.
+
+![Anteil nicht sichtbarer Nutzungswechsel in Prozent als Säulendiagramm pro Arealstatistik, Quelle: ChatGPT (erstellt am 14.10.2026)](/bilder/Bilder_Landnutzung/03-Anteil%20nicht%20sichtbarer%20Nutzungswechsel.png){#fig-interp-unsichtbar fig-pos="H" width="14cm"}
+
+4.  Räumliche Verteilung
+
+Eine Karte zeigt die räumliche Verteilung der Stichprobenpunkte mit identifizierten Nutzungswechseln im Kanton Thurgau. Dadurch können regionale Unterschiede und mögliche räumliche Häufungen dargestellt werden.
+
+![Räumliche Verteilung der Stichprobenpunkte mit identifizierten Nutzungswechseln, Quelle: ChatGPT (erstellt am 14.10.2026)](/bilder/Bilder_Landnutzung/04-Infografikkarte%20des%20Kantons%20Thurgau.png){#fig-interp-karte fig-pos="H" width="14cm"}
+
+5.  Dauer und Anzahl der Wechsel
+
+Ein Diagramm stellt dar, wie lange zwischenzeitliche Nutzungsphasen dauern und wie viele Wechsel pro Punkt auftreten. Damit lässt sich unterscheiden, ob vor allem kurzfristige oder mehrjährige Veränderungen auftreten.
+
+![Dauer der Nutzungsarten und Anzahl gewechselter Stichprobenpunkte, Quelle: ChatGPT (erstellt am 14.10.2026)](/bilder/Bilder_Landnutzung/05-Doppeltes%20Balkendiagramm%20zur%20Zwischennutzung.png){#fig-interp-dauer fig-pos="H" width="14cm"}
+
+6.  Fruchtfolgebedingte Wechsel
+
+Ein gestapeltes Balkendiagramm zeigt den Anteil fruchtfolgebedingter und anderer Nutzungswechsel innerhalb der untersuchten Erhebungsperioden. Zusätzlich kann dargestellt werden, welcher Anteil der jeweiligen Wechsel in der Arealstatistik sichtbar beziehungsweise nicht sichtbar ist.
+
+![Diagramm Fruchtfolgebedingte Wechsel zwischen den Arealstatistiken, Quelle: ChatGPT (erstellt am 14.10.2026)](/bilder/Bilder_Landnutzung/06-Gestapelte%20Nutzungswechsel%20nach%20Erhebungsperiode.png){#fig-interp-fruchtfolge fig-pos="H" width="14cm"}
+
+## Zeitplan
+
+| bis | Arbeitsschritt | Ergebnis |
+|:------------------|:--------------------------|:-------------------------|
+| **Mi 14.10.** Konzeptentwurf | Problemstellung, Forschungsfragen, Methode, Flussdiagramm und Mockups ausarbeiten | Konzeptentwurf |
+| **Fr 23.10.** Konzept | Daten beschaffen, Untersuchungszeitraum festlegen, Feedback einarbeiten | Finales Konzept, festgelegter Untersuchungszeitraum |
+| **Mo 02.11.** | Literaturrecherche schreiben | Literaturrecherche für PM |
+| **Mi 04.11.** | Schritt 1: Arealstatistik und AGIS aufbereiten, Klassen festlegen, räumliche Verknüpfung. Schritt 2: Datenkontrolle | punkte_zeitreihe, Übereinstimmungsmatrix |
+| **Mo 16.11.** | Feedback Literaturrecherche umsetzen | Fertige Literaturrecherche |
+| **Mi 18.11.** | Schritte 3--5: Häufigkeit (FF1a), Typisierung (FF1b), Sichtbarkeit (FF1c), Kreuztabelle; erste Resultate für MS vorbereiten | Kennzahlen, erste Abbildungen |
+| **Mi 25.11.** (MS 23.11.) | Schritt 6: Relevanz für LULUCF (FF2). Schritt 7: Plausibilisierung. Kapitel Grundlagen, Daten/Methode und Resultate schreiben | Alle Resultate, Berichtsentwurf |
+| **Mi 02.12.** Bericht | Diskussion, Grenzen, Schnittstelle zur Partnergruppe, Fazit, Schlusslesung | Abgabefertiger Bericht |
+| **21./22.12.** | Präsentation vorbereiten, Bericht überarbeiten | Präsentation |
+
+: {tbl-colwidths="[10,55,35]"}

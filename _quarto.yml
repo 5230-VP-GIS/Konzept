@@ -9,6 +9,9 @@ project:
   render:
     - konzept.qmd # nur das Hauptdokument rendern, nicht die Kapitel einzeln
 
+filters:
+      - tabellen-raster.lua
+
 lang: de-CH
 date-format: "D. MMMM YYYY"
 number-sections: true

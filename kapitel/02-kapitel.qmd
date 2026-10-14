@@ -13,6 +13,8 @@ Das Treibhausgasinventar (NIR) berechnet die CO~2~-Flüsse der Landnutzung aus d
 | vor der Revision  | Acker   | Wiese   | Acker → Wiese |
 | nach der Revision | Wiese   | Wiese   | kein Wechsel  |
 
+: {tbl-colwidths="[25,25,25, 25]"}
+
 Der Punkt gilt in 2013/18 als unverändert, für das NIR entfällt aber ein Übergang samt Kohlenstoffbindung. Das NIR hat die revidierten Daten 2025 und 2026 übernommen und dabei nur die Flächen geprüft [BAFU, -@SwitzerlandsNationalInventory]. Wie stark die Revision die Übergänge und damit die CO~2~-Flüsse verändert, ist nicht untersucht.
 
 ### Forschungsfrage
@@ -51,6 +53,8 @@ Der Punkt gilt in 2013/18 als unverändert, für das NIR entfällt aber ein Übe
 | NFI-Regionen | WSL, Landesforstinventar | Jura, Mittelland, Voralpen, Alpen, Alpensüdseite |
 | Flächenstatistik NIR | NIR 2026, Tab. 6-7 | Flächen pro CC und Jahr |
 | Revisionsanalyse BFS | BFS 2026, Tab. 1 und 7 | Revisionseffekt auf Zustände 2013/18 |
+
+: {tbl-colwidths="[25,25,50]"}
 
 ## Methode
 
@@ -153,6 +157,8 @@ Alle Abbildungen werden mit ggplot2 statisch erstellt. Die Mockups zeigen Aufbau
 | @fig-kanton | Gestapelte Balken: Revisionsdichte pro Kanton, Siedlung vs. offenes Land, nach Revisionstyp | FF1b | Melanie |
 | @fig-kohlenstoff | Balken: relative Differenz der Kohlenstoffbilanz pro Periode und Übergangsart | FF1c | Melanie |
 
+: {tbl-colwidths="[15,65,10,10]"}
+
 ![Differenz der Übergangsmatrizen (revidiert − original) pro Periode. Rot = Übergang häufiger, blau = seltener nach der Revision.](/bilder/Bilder_Revision/Uebergangsmatrizen.png){#fig-matrix width="12cm"}
 
 ![Art der Änderung pro Periode. „verschoben“ zeigt Übergänge, die durch den Nachvollzug in eine andere Periode wan-dern (H3).](/bilder/Bilder_Revision/Balkendiagramm_Uebergaenge.png){#fig-arten width="12cm"}
@@ -175,6 +181,8 @@ Alle Abbildungen werden mit ggplot2 statisch erstellt. Die Mockups zeigen Aufbau
 | 04_kohlenstoff.qmd | Kohlenstoffbilanz, relative Differenz | Melanie |
 | 05_plausibilisierung.qmd | Abgleich mit BFS 2026 (Tab. 1 und 7) und NIR-Tab. 6-7 | Melanie |
 
+: {tbl-colwidths="[25,60,15]"}
+
 ## Architektur Bericht
 
 | Kapitel (report/) | Inhalt | Abbildungen/ Tabellen | Wer |
@@ -189,6 +197,8 @@ Alle Abbildungen werden mit ggplot2 statisch erstellt. Die Mockups zeigen Aufbau
 | 08_fazit.qmd | Kernaussagen, Ausblick | – | Manuel |
 | `_quarto.yml` | Reihenfolge der Kapitel, Layout, Literatur (.bib) | – | beide |
 
+: {tbl-colwidths="[25,35,25,15]"}
+
 ## Aufgabenteilung
 
 |   | Manuel | Melanie |
@@ -199,6 +209,8 @@ Alle Abbildungen werden mit ggplot2 statisch erstellt. Die Mockups zeigen Aufbau
 | Bericht | 02 Grundlagen: Arealstatistik, Revision R4, CC, 03 Methode Schritte 1–3, 04 Resultate FF1a, 07 Diskussion H1 und H3, 08 Fazit | 01 Einleitung, 02 Grundlagen: NIR und Kohlenstoffvorräte, 03 Methode Schritte 4–5, 05 Resultate FF1b, 06 Resultate FF1c, 07 Diskussion H2 und H4, Grenzen, Schnittstelle zur anderen Gruppe |
 | Präsentation | Folien FF1a | Folien FF1b/c |
 | gemeinsam | Konzept, Kapitel des anderen gegenlesen, Layout und Literatur (`_quarto.yml`) |  |
+
+: {tbl-colwidths="[14,43,43]"}
 
 Parallel arbeiten:
 
@@ -218,6 +230,8 @@ Parallel arbeiten:
 | **Mi 25.11.**<br>(23.11 MS) | 03 Daten/Methode Schritte 1–3, 04 Resultate FF1a | 03 Daten/Methode Schritte 4–5, 05 Resultate FF1b, 06 Resultate FF1c | Kapitel des anderen gegenlesen |
 | **Mi 02.12.** Bericht | 07 Diskussion H1 und H3, 08 Fazit | 07 Diskussion H2 und H4, Grenzen, Schnittstelle zur anderen Gruppe, Plausibilisierung | Layout und Literatur (`_quarto.yml`), Schlusslesung, abgeben |
 | **21. / 22.12.** | Folien FF1a | Folien FF1b/c | Überarbeitung Bericht, Präsentation |
+
+: {tbl-colwidths="[10,30,30,30]"}
 
 ## Optionale Erweiterungen
 
