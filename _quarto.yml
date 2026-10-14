@@ -10,6 +10,7 @@ project:
     - konzept.qmd # nur das Hauptdokument rendern, nicht die Kapitel einzeln
 
 filters:
+      - quarto
       - tabellen-raster.lua
 
 lang: de-CH

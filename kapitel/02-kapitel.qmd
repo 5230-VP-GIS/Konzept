@@ -220,7 +220,7 @@ Parallel arbeiten:
 ## Zeitplan
 
 | bis | Manuel | Melanie | gemeinsam |
-|------------------|------------------|------------------|--------------------|
+|------------------|------------------|------------------|-------------------|
 | **Mi 14.10.** Konzeptentwurf | Datentabelle, Mockups, Architektur, Flussdiagramm, Fragestellungen ausarbeiten |  | gegenseitig lesen, abgeben |
 | **Fr 23.10.** Konzept | Join über RELI, Tab. 6-5 als Nachschlagetabelle | Kanton, Höhenzone und NFI-Region pro Punkt (direkt an AS-Rohdaten), Tab. 6-4 als Nachschlagetabelle | Feedback<br>MS1 / Konzept einarbeiten, (neue) Literatur für eigenen Grundlagen-Teil |
 | **Mo 02.11.** Literaturteil | 02 Grundlagen: Arealstatistik und Revision R4 und CC-Zuordnung | 01 Einleitung, 02 Grundlagen: NIR/Treibhausgasinventar und Kohlenstoffvorräte | Literaturteil zusammenführen, Literatur (.bib) anlegen, abgeben |
@@ -232,6 +232,7 @@ Parallel arbeiten:
 | **21. / 22.12.** | Folien FF1a | Folien FF1b/c | Überarbeitung Bericht, Präsentation |
 
 : {tbl-colwidths="[10,30,30,30]"}
+
 
 ## Optionale Erweiterungen
 
