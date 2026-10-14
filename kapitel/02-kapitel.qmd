@@ -1,21 +1,19 @@
-bibliography: literatur.bib
-
 # Effekt der AS-Revision auf Übergänge und CO~2~ {#as-revision}
 
 ## Problemstellung und Zielsetzung
 
 ### Ausgangslage
 
-Die Arealstatistik (AS) des BFS erhebt auf einem 100-m-Gitter Bodennutzung und Bodenbedeckung [@zotero-item-154]. Dies seit 1985 in vier abgeschlossenen Erhebungen. Mit der laufenden 5. Erhebung vergleicht das BFS jeden Punkt mit allen früheren und korrigiert die Zeitreihe rückwirkend (Revision R4, 2024–2026). Dabei werden Nachvollzüge (eine früher übersehene Veränderung wird zum richtigen Zeitpunkt eingetragen) und unechte Veränderungen (eine frühere Klasse war falsch) unterschieden.
+Die Arealstatistik (AS) des BFS erhebt auf einem 100-m-Gitter Bodennutzung und Bodenbedeckung [BFS -@zotero-item-154]. Dies seit 1985 in vier abgeschlossenen Erhebungen. Mit der laufenden 5. Erhebung vergleicht das BFS jeden Punkt mit allen früheren und korrigiert die Zeitreihe rückwirkend (Revision R4, 2024–2026). Dabei werden Nachvollzüge (eine früher übersehene Veränderung wird zum richtigen Zeitpunkt eingetragen) und unechte Veränderungen (eine frühere Klasse war falsch) unterschieden [BFS -@zotero-item-196].
 
-Das Treibhausgasinventar (NIR) berechnet die CO~2~-Flüsse der Landnutzung aus den AS-Daten. Emissionen und Senken entstehen dort fast nur bei Übergängen zwischen Klassen. Das BFS hat den Effekt der Revision aber nur für Zustände publiziert: In der Erhebung 2013/18 hat sich bei 3.2 % der Punkte die Klasse geändert. Korrekturen früherer Erhebungen erfasst dieser Vergleich nicht, obwohl sie Übergänge verändern:
+Das Treibhausgasinventar (NIR) berechnet die CO~2~-Flüsse der Landnutzung aus den AS-Daten. Emissionen und Senken entstehen dort fast nur bei Übergängen zwischen Klassen [BAFU -@SwitzerlandsNationalInventory]. Das BFS hat den Effekt der Revision aber nur für Zustände publiziert: In der Erhebung 2013/18 hat sich bei 3.2 % der Punkte die Klasse geändert [BFS -@zotero-item-196, Tab. 1]. Korrekturen früherer Erhebungen erfasst dieser Vergleich nicht, obwohl sie Übergänge verändern:
 
 | Version           | 2004/09 | 2013/18 | Übergang      |
 |-------------------|---------|---------|---------------|
 | vor der Revision  | Acker   | Wiese   | Acker → Wiese |
 | nach der Revision | Wiese   | Wiese   | kein Wechsel  |
 
-Der Punkt gilt in 2013/18 als unverändert, für das NIR entfällt aber ein Übergang samt Kohlenstoffbindung. Das NIR hat die revidierten Daten 2025 und 2026 übernommen und dabei nur die Flächen geprüft. Wie stark die Revision die Übergänge und damit die CO~2~-Flüsse verändert, ist nicht untersucht.
+Der Punkt gilt in 2013/18 als unverändert, für das NIR entfällt aber ein Übergang samt Kohlenstoffbindung. Das NIR hat die revidierten Daten 2025 und 2026 übernommen und dabei nur die Flächen geprüft [BAFU, -@SwitzerlandsNationalInventory]. Wie stark die Revision die Übergänge und damit die CO~2~-Flüsse verändert, ist nicht untersucht.
 
 ### Forschungsfrage
 
@@ -148,7 +146,7 @@ Der Punkt gilt in 2013/18 als unverändert, für das NIR entfällt aber ein Übe
 Alle Abbildungen werden mit ggplot2 statisch erstellt. Die Mockups zeigen Aufbau und Darstellung mit fiktiven Werten. Im Mockup sind die Klassen auf 6 Hauptkategorien zusammengefasst, im Bericht werden die 17 CC verwendet.
 
 | Nr. | Abbildung | Frage | Wer |
-|---------------------|------------------|-----------------|-----------------|
+|-------------------|------------------|------------------|------------------|
 | @fig-matrix | Heatmap der Differenzmatrix (revidiert − original), eine pro Periode | FF1a | Manuel |
 | @fig-arten | Gestapelte Balken: verschwunden / neu / andere Klasse / verschoben pro Periode | FF1a | Manuel |
 | @fig-karte | Karte der Revisionsdichte im 2-km-Raster | FF1b | Melanie |
@@ -180,7 +178,7 @@ Alle Abbildungen werden mit ggplot2 statisch erstellt. Die Mockups zeigen Aufbau
 ## Architektur Bericht
 
 | Kapitel (report/) | Inhalt | Abbildungen/ Tabellen | Wer |
-|-------------------|-------------------|------------------|------------------|
+|------------------|------------------|------------------|------------------|
 | 01_einleitung.qmd | Einleitung zum Teilprojekt, Problemstellung, Fragestellung FF1a–FF1c, Hypothesen | – | Melanie |
 | 02_grundlagen.qmd | Arealstatistik, Revision R4 (Nachvollzug, unechte Veränderung), CC und NIR | Beispieltabelle Revision | Man:<br>AS, R4, CC<br>Mel: NIR, C-Vorrat |
 | 03_daten_methode.qmd | Untersuchungsgebiet, Daten, Methodenschritte 1–6, Flussdiagramm | Flussdiagramm, Datentabelle | beide |
@@ -194,7 +192,7 @@ Alle Abbildungen werden mit ggplot2 statisch erstellt. Die Mockups zeigen Aufbau
 ## Aufgabenteilung
 
 |   | Manuel | Melanie |
-|-------------------|---------------------|---------------------------------|
+|-------------------|---------------------|--------------------------------|
 | Daten | AS-Ausgaben und CC-Zuordnung (NIR-Tab. 6-5) | swissBOUNDARIES3D, DHM25 und NFI-Regionen, Tab. 6-4 als Nachschlagetabelle, Vergleichswerte für die Plausibilisierung |
 | Analyse | Join, CC, Matrizen, Kennzahlen inkl. „verschoben“ | Kanton, Höhenzone und NFI-Region pro Punkt, Revisionsdichte, Karte, Kohlenstoffbilanz, Plausibilisierung |
 | Abbildungen | @fig-matrix, @fig-arten | @fig-karte, @fig-kanton, @fig-kohlenstoff |
@@ -210,7 +208,7 @@ Parallel arbeiten:
 ## Zeitplan
 
 | bis | Manuel | Melanie | gemeinsam |
-|----------------|----------------|------------------|----------------------|
+|------------------|------------------|------------------|--------------------|
 | **Mi 14.10.** Konzeptentwurf | Datentabelle, Mockups, Architektur, Flussdiagramm, Fragestellungen ausarbeiten |  | gegenseitig lesen, abgeben |
 | **Fr 23.10.** Konzept | Join über RELI, Tab. 6-5 als Nachschlagetabelle | Kanton, Höhenzone und NFI-Region pro Punkt (direkt an AS-Rohdaten), Tab. 6-4 als Nachschlagetabelle | Feedback<br>MS1 / Konzept einarbeiten, (neue) Literatur für eigenen Grundlagen-Teil |
 | **Mo 02.11.** Literaturteil | 02 Grundlagen: Arealstatistik und Revision R4 und CC-Zuordnung | 01 Einleitung, 02 Grundlagen: NIR/Treibhausgasinventar und Kohlenstoffvorräte | Literaturteil zusammenführen, Literatur (.bib) anlegen, abgeben |
